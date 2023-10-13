@@ -15,9 +15,13 @@ Cada mesa/usuario realizará su pedido, que se guardará en una lista que se le 
 def carta():
     carta = {
         "Pasta": {"Espaguetis": 5, "Macarrones": 4, "Fusili": 4.5},
-        "Salsas": {"Carbonara": 2, "Rabiosa": 2.5, "Pesto verde": 2.5, "Pesto rojo": 2.5, "Boloñesa": 2},
         "Pizza": {"Clásica": 8, "Integral": 9}
     }
+    Salsas: {"Carbonara": 2, 
+                "Rabiosa": 2.5, 
+                "Pesto verde": 2.5, 
+                "Pesto rojo": 2.5, 
+                "Boloñesa": 2}
     
     ingredientePizza = {
         "Extra de queso": 1,
@@ -31,7 +35,24 @@ def carta():
         "Anchoas": 3,
         "Atún": 2.5,
         "Salmón": 3,
-        "Piña": 1.5,
+        "Piña": 1.5
+        }
+    
+    postre = {
         "Tiramisu": 6,
         "Panna cotta": 5.5
     }
+
+    precio = (int)
+    
+    
+    if input(f'Quieres pasta? si/no').casefold("si"):
+        sals = input(f'Elige una salsa: ')
+        if sals in carta["Pasta"][sals]:
+            precio = carta["Pasta"][sals]
+        else:
+            print(f'Hay que eligir una salsa validad.')    
+            
+    if input(f'Quieres Pizza? si/no').casefold("si"):
+        print(precio)
+    

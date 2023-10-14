@@ -1,29 +1,19 @@
-"""
-3. Implementa en Python un programa que resuelva el siguiente problema:
-Vamos a llevar la lista de pedidos de un restaurante italiano en Python. La carta va a estar limitada a una serie de platos, 
-fundamentalmente combinaciones de ingredientes sencillos.
-Pasta: espaguetis, macarrones y fusili.
-Salsas: carbonara, rabiosa, pesto verde, pesto rojo, boloñesa.
-Pizza: clásica, integral.
-Ingredientes para pizzas: extra de queso, queso azul, salchicha, carne, chorizo, jamón, pimiento verde, aceitunas, anchoas, atún, salmón, piña.
-Tiramisu, panna cotta.
-La pasta tendrá una única salsa, la pizza puede tener hasta 5 ingredientes.
-Cada mesa/usuario realizará su pedido, que se guardará en una lista que se le mostrará junto con el precio total.
 
-"""
-
-def carta():
+# Function to show the menu of the restaurant and return the menu as a dictionary
+def mostrar_carta():
     carta = {
         "Pasta": {"Espaguetis": 5, "Macarrones": 4, "Fusili": 4.5},
         "Pizza": {"Clásica": 8, "Integral": 9}
     }
-    Salsas: {"Carbonara": 2, 
-                "Rabiosa": 2.5, 
-                "Pesto verde": 2.5, 
-                "Pesto rojo": 2.5, 
-                "Boloñesa": 2}
-    
-    ingredientePizza = {
+    salsas = {
+        "Carbonara": 2,
+        "Rabiosa": 2.5,
+        "Pesto verde": 2.5,
+        "Pesto rojo": 2.5,
+        "Boloñesa": 2
+    }
+
+    ingredientes_pizza = {
         "Extra de queso": 1,
         "Queso azul": 2,
         "Salchicha": 1.5,
@@ -36,23 +26,100 @@ def carta():
         "Atún": 2.5,
         "Salmón": 3,
         "Piña": 1.5
-        }
-    
-    postre = {
+    }
+
+    postres = {
         "Tiramisu": 6,
         "Panna cotta": 5.5
     }
 
-    precio = (int)
-    
-    
-    if input(f'Quieres pasta? si/no').casefold("si"):
-        sals = input(f'Elige una salsa: ')
-        if sals in carta["Pasta"][sals]:
-            precio = carta["Pasta"][sals]
-        else:
-            print(f'Hay que eligir una salsa validad.')    
-            
-    if input(f'Quieres Pizza? si/no').casefold("si"):
-        print(precio)
-    
+    print("**Carta de restaurante italiano**")
+    print("**Pasta**")
+    for tipo_pasta, precio in carta["Pasta"].items():
+        print(f"{tipo_pasta:10}: {precio:.2f}")
+    print("**Salsas**")
+    for salsa, precio in salsas.items():
+        print(f"{salsa:10}: {precio:.2f}")
+    print("**Pizza**")
+    for tipo_pizza, precio in carta["Pizza"].items():
+        print(f"{tipo_pizza:10}: {precio:.2f}")
+    print("**Ingredientes para pizzas**")
+    for ingrediente, precio in ingredientes_pizza.items():
+        print(f"{ingrediente:10}: {precio:.2f}")
+    print("**Postres**")
+    for tipo_postre, precio in postres.items():
+        print(f"{tipo_postre:10}: {precio:.2f}")
+    print("")
+
+    return carta, salsas, ingredientes_pizza, postres
+
+
+# Function to calculate the total price of the order and return it as a float
+def calcular_precio_pedido(carta, salsas, ingredientes_pizza, postres):
+    precio_total = 0
+    sw = True
+    if input('¿Quieres pasta? si/no: ').casefold() == "si":
+        while sw:        
+            tipo_pasta = input('Elige el tipo de pasta: ')
+            if tipo_pasta in carta["Pasta"]:
+                precio_total += carta["Pasta"][tipo_pasta]
+                salsa = input('Elige una salsa: ')
+                if salsa in salsas:
+                    precio_total += salsas[salsa]
+                    sw = False
+                else:
+                    print('Debes elegir una salsa válida.')
+            else:
+                print('Debes elegir un tipo de pasta válida.')
+
+    sw = True
+    if input('¿Quieres pizza? si/no: ').casefold() == "si":
+        while sw: 
+            tipo_pizza = input('Elige el tipo de pizza: ')
+            if tipo_pizza in carta["Pizza"]:
+                precio_total += carta["Pizza"][tipo_pizza]
+
+                ingredientes = []
+                for i in range(1, 6):
+                    ingrediente = input(f'Ingrediente {i}: ')
+                    if ingrediente in ingredientes_pizza:
+                        ingredientes.append(ingrediente)
+                        sw = False
+                    else:
+                        print('Debes elegir un ingrediente válido.')
+                        sw = True
+
+                for ingrediente in ingredientes:
+                    precio_total += ingredientes_pizza[ingrediente]
+                
+            else:
+                print('Debes elegir un tipo de pizza válido.')
+
+    sw = True
+    if input('¿Quieres postre? si/no: ').casefold() == "si":
+        while sw:
+            tipo_postre = input('Elige el postre: ')
+            if tipo_postre in postres:
+                precio_total += postres[tipo_postre]
+                sw = False
+            else:
+                print('Debes elegir un postre válido.')
+
+    return precio_total
+
+# Main program function to call the other functions
+def main():
+    carta, salsas, ingredientes_pizza, postres = mostrar_carta()
+    precio_total = calcular_precio_pedido(carta, salsas, ingredientes_pizza, postres)
+    print(f"El precio total es: {precio_total:.2f}")
+
+
+# Main program
+if __name__ == "__main__":
+    main()
+
+"""
+_summary_
+    This program shows the menu of an Italian restaurant and calculates the total price of the order.
+_end_summary_
+"""

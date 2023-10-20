@@ -1,0 +1,1 @@
+print((lambda y: pow(y, 2))(float(input("Ingresa un numero: "))))
